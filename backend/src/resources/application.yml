@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/assetflow
+    username: postgres
+    password: your_password
+  jpa:
+    hibernate:
+      ddl-auto: update # Automatically syncs DB schema with Java Entities
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
