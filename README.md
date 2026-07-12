@@ -1,48 +1,84 @@
-# AssetFlow: Enterprise Asset & Resource Management System
+# AssetFlow
 
-> A centralized ERP platform designed to digitize and structure the tracking, allocation, and maintenance of physical assets and shared resources. Built for the Odoo Hackathon 2026.
+AssetFlow is a comprehensive, enterprise-grade IT Asset Management system built to streamline the tracking, allocation, maintenance, and auditing of physical company resources.
 
-## 📖 Overview
+## 🚀 Features
 
-AssetFlow eliminates the manual inefficiencies of spreadsheets and paper logs by introducing strict asset lifecycles, real-time resource visibility, and structured maintenance workflows. By focusing purely on operational ERP functionality—without the bloat of purchasing or accounting concerns—AssetFlow delivers a clean, role-based system capable of scaling across any organization (schools, hospitals, agencies, or factories).
+AssetFlow supports the complete lifecycle of corporate IT assets, offering advanced capabilities to keep equipment tracking seamless and accountable.
 
-## 🏗️ Architectural Philosophy
+* **Dashboard & KPI Analytics:** High-level metrics showing total assets, allocation percentages, overdue returns, and real-time activity charts.
+* **Role-Based Access Control (RBAC):** Secure ecosystem with distinct permission sets for Admins, Managers, and Employees using stateless JWT authentication.
+* **Asset Onboarding & Tracking:** Easily log new hardware, categorize by type, track serial numbers, and assign them to specific employees or departments.
+* **Shared Resource Booking:** A calendar-based booking system for shared assets (like projectors, cameras, and company vehicles) to prevent scheduling conflicts.
+* **Maintenance & Repair Tracking:** Ticketing system for damaged equipment with lifecycle statuses (Pending, In Progress, Resolved).
+* **Physical Audit Cycles:** Run structured physical verification rounds based on department or location. Automatically flags discrepancies (Missing, Damaged) and generates actionable reports.
+* **Activity Logs & Notifications:** A global audit log tracking who did what and when, along with targeted real-time alerts for asset assignments and lifecycle changes.
 
-AssetFlow is engineered to handle strict state management and high concurrency, prioritizing data integrity and system reliability.
+## 🛠️ Technology Stack
 
-*   **Object-Oriented State Management:** The asset lifecycle is governed by strict state transitions enforced at the service layer, moving immutably from *Available* to *Allocated*, *Reserved*, *Under Maintenance*, *Lost*, *Retired*, or *Disposed*. 
-*   **Greedy Interval Scheduling:** To handle shared resource booking (rooms, vehicles, equipment), the system leverages greedy algorithm design paradigms to efficiently process interval scheduling, ensuring zero overlapping time-slot conflicts under high concurrency.
-*   **Uniform Data Access Layer:** All database interactions utilize strict JPQL (Java Persistence Query Language) to maintain a purely object-oriented database schema, mapping complex relational entities without sacrificing query readability.
+### Backend
+* **Framework:** Java 17, Spring Boot 3
+* **Database:** PostgreSQL with Spring Data JPA / Hibernate
+* **Security:** Spring Security & JSON Web Tokens (JWT)
+* **Build Tool:** Maven
 
-## 🚀 Core Features
-
-*   **Smart Asset Allocation:** Assign assets to employees or departments with strict double-allocation prevention. If an asset is taken, users are routed to a structured Transfer Request workflow.
-*   **Conflict-Free Resource Booking:** A calendar-driven booking engine that actively validates and rejects overlapping time-slot requests.
-*   **Kanban Maintenance Approvals:** A routed workflow requiring Asset Manager approval before an asset transitions to *Under Maintenance*.
-*   **Structured Audit Cycles:** Assign auditors to specific departments, verify physical asset conditions, and auto-generate discrepancy reports for missing or damaged items.
-*   **Role-Based Access Control (RBAC):** Secure partitioning of actions across Admins, Asset Managers, Department Heads, and Employees.
-
-## 💻 Tech Stack
-
-**Backend System**
-*   **Java 21 & Spring Boot 3:** Core RESTful API and business logic layer.
-*   **PostgreSQL:** Primary relational database ensuring ACID compliance for critical transactional data.
-*   **Spring Data JPA:** Object-Relational Mapping utilizing pure JPQL for domain consistency.
-*   **Redis:** High-speed caching layer for dashboard KPIs and distributed locking.
-
-**Frontend Interface**
-*   **React & TypeScript:** Type-safe, component-driven user interface.
-*   **Tailwind CSS:** Utility-first styling for a clean, responsive enterprise aesthetic.
-
-## 🗄️ Core Domain Model (Master Data)
-
-*   `Department`: Hierarchical organization structure.
-*   `AssetCategory`: Classifications for varied resources (e.g., Electronics, Vehicles).
-*   `Employee`: Core user entity with defined RBAC roles.
-
-## ⚙️ Getting Started (Local Development)
-
-*(Instructions for cloning, Docker-compose setup, and environment variables will be populated here as development progresses).*
+### Frontend
+* **Framework:** React 18 (Functional Components & Hooks)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Build Tool:** Vite
 
 ---
-*Developed for the Odoo Hackathon*
+
+## 💻 Getting Started
+
+### Prerequisites
+* Java 17+
+* Node.js 18+
+* PostgreSQL 14+
+
+### 1. Database Setup
+1. Create a PostgreSQL database named `assetflow`.
+2. Ensure you have the PostgreSQL credentials ready.
+
+### 2. Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Create a `.env` file in the `backend/` directory to store your database credentials securely:
+   ```env
+   DB_URL=jdbc:postgresql://localhost:5432/assetflow
+   DB_USERNAME=postgres
+   DB_PASSWORD=your_password_here
+   ```
+3. Build and run the Spring Boot application:
+   ```bash
+   mvn clean package -DskipTests
+   java -jar target/assetflow-0.0.1-SNAPSHOT.jar
+   ```
+   *The backend will start on `http://localhost:8080` and JPA will automatically initialize your database tables.*
+
+### 3. Frontend Setup
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   *The frontend will be accessible at `http://localhost:5173`.*
+
+---
+
+## 🔒 Default Accounts
+
+Once the server runs, you can create a test organization from the **Org Setup** screen or register via the Signup flow. The application allows creation of **Admin**, **Manager**, and **Employee** roles.
+
+## 📄 License
+This project was developed for the Odoo Hackathon 2026.
